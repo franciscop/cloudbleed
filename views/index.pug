@@ -59,7 +59,9 @@ html
           message = 'Congrats! Looks like that domain is not listed as leaked.';
         } else {
           message = `
-            <h2>Leaked</h2>
+            <h2>Leaked
+              (<a href="https://twitter.com/intent/tweet?text=${encodeURI(data.res[0])}+has+been+leaking+for+6+months+with+Cloudbleed!+Check+any+site:+https:%2F%2Fcloudbleed.site%2F+%23cloudbleed" target="_blank">Tweet this</a>)
+            </h2>
             <div class="flex one two-600 three-900">
               <div>${data.res.join('</div><div>')}</div>
             </div>

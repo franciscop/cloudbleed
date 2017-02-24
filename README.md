@@ -24,7 +24,13 @@ Priority list for the search:
 
 ## S**t, I found a domain where I wrote X
 
-Okay, don't panic. If it's a credit card cancel it, otherwise change your password and anywhere else where that password was used. Better yet, use this opportunity to start using a Password Manager.
+This list contains all domains that use cloudflare DNS, not just the cloudflare SSL proxy (the affected service that leaked data). It's a broad sweeping list that includes everything. Just because a domain is on the list does not mean the site is compromised.
+
+For instance, if the site is using HTTPS with cloudflare but also including Stripe's front-end checkout, they use their own TLS certificates so it wouldn't be compromised.
+
+Some people recommend that if it's a credit card cancel it.
+
+Otherwise change your password and anywhere else where that password was used. Better yet, use this opportunity to start using a Password Manager.
 
 
 
