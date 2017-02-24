@@ -1,6 +1,8 @@
 # Cloudbleed
 
-Search **for domains** where you wrote sensitive information in the last 6 months.
+Cloudbleed is one of the biggest leaks in the history of private data. Read on [the news report](https://www.cyberscoop.com/cloudflare-has-been-leaking-massive-data-for-months/) or just google it.
+
+This page allows you to **search for domains** where you wrote sensitive information in the last 6 months to see if they are affected.
 
 > This tool is ONLY to search for domains, not for the sensitive information itself. Please do not write anything sensitive (though [nothing here is tracked and the site is open source](https://github.com/franciscop/cloudbleed))
 
