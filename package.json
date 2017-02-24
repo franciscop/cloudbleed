@@ -1,0 +1,16 @@
+{
+  "name": "cloudbleed",
+  "version": "1.0.0",
+  "description": "Website to check if your site is affected by cloudbleed",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Francisco Presencia <public@francisco.io> (http://francisco.io/)",
+  "license": "MIT",
+  "dependencies": {
+    "jstransformer-marked": "^1.0.2",
+    "server": "^1.0.0-alpha.19",
+    "socket.io": "^1.7.3"
+  }
+}

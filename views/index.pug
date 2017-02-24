@@ -1,0 +1,65 @@
+doctype html
+html
+  head
+    title Cloudbleed
+    meta(charset='utf-8')
+    meta(name='viewport' content='width=device-width, initial-scale=1')
+    link(href='https://unpkg.com/paperdocs@1/paperdocs.min.css' rel='stylesheet')
+    link(rel='stylesheet' href='style.css')
+  body
+    nav
+      a.brand Cloudbleed
+      
+      input#menu.show(type="checkbox")
+      label.burger.pseudo.button(for="menu") menu
+
+      .menu
+        a.pseudo.button(href='https://news.ycombinator.com/item?id=13718752') Hacker News
+        a.pseudo.button(href='https://www.reddit.com/r/Bitcoin/comments/5vuih9/internet_psa_cloudbleed_cloudflare_leaked/') Reddit
+        a.pseudo.button(href='https://bugs.chromium.org/p/project-zero/issues/detail?id=1139') Bug Report
+        a.button(href='https://www.cyberscoop.com/cloudflare-has-been-leaking-massive-data-for-months/') News report
+
+    div.search
+      div.results Start typing to search for leaked domains:
+      input.search(placeholder="example.com" autofocus=true)
+    
+    article.results.hidden
+
+    article
+      include:marked ../README.md
+    script(src='https://unpkg.com/paperdocs@1/paperdocs.min.js')
+    script(src='socketio.min.js')
+    script.
+      const socket = io();
+      const search = document.querySelector('input.search');
+      const results = document.querySelector('article.results');
+
+      let timer = false;
+      const change = e => {
+        if (!search.value) {
+          return results.classList.add('hidden');
+        }
+        if (timer) { clearTimeout(timer); }
+        timer = setTimeout(() => {
+          socket.emit('search', { domain: search.value });
+        }, 500);
+      };
+      search.addEventListener('input', change);
+      socket.on('search', data => {
+        results.classList.remove('hidden');
+        let message = '';
+        if (data.total === 0) {
+          message = 'Congrats! Looks like that domain is not listed as leaked.';
+        } else {
+          message = `
+            <h2>Leaked</h2>
+            <div class="flex one two-600 three-900">
+              <div>${data.res.join('</div><div>')}</div>
+            </div>
+            ${data.total > 30 ? `
+              <p>${data.total} found in total; refine the search to show others</p>
+            ` : ''}
+          `;
+        }
+        results.innerHTML = message;
+      });
