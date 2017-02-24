@@ -35,16 +35,22 @@ html
       const results = document.querySelector('article.results');
 
       let timer = false;
+      // When the user is typing
       const change = e => {
+        // Nothing to search
         if (!search.value) {
           return results.classList.add('hidden');
         }
+
+        // Do not send the request until after .5s without typing (avoid DDOS)
         if (timer) { clearTimeout(timer); }
         timer = setTimeout(() => {
           socket.emit('search', { domain: search.value });
         }, 500);
       };
       search.addEventListener('input', change);
+
+      // Listen to the answer from the server
       socket.on('search', data => {
         results.classList.remove('hidden');
         let message = '';

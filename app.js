@@ -14,10 +14,16 @@ socket('search', ([data], socket, io) => {
     return socket.emit('search', { res: [], total: 0 });
   }
   const domain = data.domain.toLowerCase();
-  let res = list.filter(item => item.includes(domain));
-  const total = res.length;
-  res = res.slice(0, 30);
-  socket.emit('search', { res, total });
+
+  // Lightweight request (full domain is a match):
+  if (list.includes(domain)) {
+    socket.emit('search', { res: [domain], total: 1 });
+    return;
+  }
+
+  // Full-list search
+  const res = list.filter(item => item.includes(domain));
+  socket.emit('search', { res: res.slice(0, 30), total: res.length });
 });
 
 const home = get('/', ctx => ctx.res.render('index'));
